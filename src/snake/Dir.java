@@ -1,5 +1,6 @@
 package snake;
 
-public class Dir {
+public enum Dir {
+	L,R,U,D;
      
 }
