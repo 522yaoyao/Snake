@@ -7,9 +7,10 @@ public class Snake {
      Node head=null;
      Node tail=null;
      int size=0;
-     public Snake(Node node){
-    	 head=node;
-    	 tail=node;
+     Node n=new Node(10,20,Dir.L);
+     public Snake(){
+    	 head=n;
+    	 tail=n;
     	 size=1;
      }
 	public void addToTail(){
@@ -30,6 +31,7 @@ public class Snake {
 			 }
 		tail.next=node;//使tail的next属性指向下一个节点；
 		tail=node;//tail始终指向尾节点；
+		size++;
 	}
 	public void  addToHead(){
 		Node node=null;
@@ -49,6 +51,21 @@ public class Snake {
 			 }
 		node.next=head;
 		head=node;
+		size++;
+	}
+	public void draw(Graphics g){
+		if(size<=0)
+			return;
+		Node n=head;
+		//遍历这条蛇的每一个节点，并依此画出；
+	while(n!=null){
+			n.draw(g);
+			n=n.next;
+			
+		}
+	/*	for(Node n = head; n != null; n = n.next) {
+			n.draw(g);
+		}*/
 	}
 	private class Node{
 	   private	int w=Yard.BLOCK_SIZE;
@@ -62,7 +79,7 @@ public class Snake {
 			this.dir=dir;
 			
 		}
-		//画这条蛇；
+		//画这条蛇的每一个点；
 		void draw(Graphics g){
 			Color c=g.getColor();
 			g.setColor(Color.BLACK);

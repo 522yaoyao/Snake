@@ -13,6 +13,8 @@ public class Yard  extends Frame{
 	public static final int COLS =50;
 	public static final int BLOCK_SIZE = 10;
 	
+	Snake s=new Snake();
+	
 	@Override
 	public void paint(Graphics g){
 		Color c=g.getColor();// 获取此图形上下文的当前颜色;
@@ -28,6 +30,8 @@ public class Yard  extends Frame{
 		for(int i=1;i<ROWS;i++){
 			g.drawLine( i*BLOCK_SIZE, 0, i*BLOCK_SIZE,BLOCK_SIZE*ROWS );
 		}
+		g.setColor(c);
+		s.draw(g);
 	}
 	
 	public void launch() {
