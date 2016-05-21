@@ -3,6 +3,8 @@ package snake;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -15,6 +17,9 @@ public class Yard  extends Frame{
 	
 	Snake s=new Snake();
 	
+	//Image offScreenImage=null;
+	
+	//绘制容器;
 	@Override
 	public void paint(Graphics g){
 		Color c=g.getColor();// 获取此图形上下文的当前颜色;
@@ -33,7 +38,27 @@ public class Yard  extends Frame{
 		g.setColor(c);
 		s.draw(g);
 	}
-	
+	private class PaintThread  implements Runnable{
+		
+		public void run(){
+			while(true){
+				repaint();//重绘此组件；
+				try{
+					Thread.sleep(300);
+				}catch(InterruptedException e){
+					
+				}
+			}
+		}
+	}
+	private class KeyMonitor extends KeyAdapter{
+		@Override
+		public void keyPressed(KeyEvent e){
+			s.keyPressed(e);
+			
+		}
+		
+	}
 	public void launch() {
 		this.setLocation(200, 200);//将组件移到新位置。通过此组件父级坐标空间中的 x 和 y 参数来指定新位置的左上角；
 		this.setSize(COLS * BLOCK_SIZE, ROWS * BLOCK_SIZE);// 调整组件的大小，使其宽度为 width，高度为 height；
@@ -44,11 +69,14 @@ public class Yard  extends Frame{
 			System.exit(0);
 			}
 		});
+		this.addKeyListener(new KeyMonitor());//添加键盘监听；
+		new Thread(new PaintThread()).start();
 	}
 	
 	
 	public static void main(String args[]){
 		new Yard().launch();
+		
 		
 	}
 
