@@ -16,6 +16,7 @@ public class Yard  extends Frame{
 	public static final int BLOCK_SIZE = 10;
 	
 	Snake s=new Snake();
+	Egg e=new Egg();
 	
 	//Image offScreenImage=null;
 	
@@ -37,6 +38,8 @@ public class Yard  extends Frame{
 		}
 		g.setColor(c);
 		s.draw(g);
+		e.draw( g);
+		s.eat( e);
 	}
 	private class PaintThread  implements Runnable{
 		

@@ -2,6 +2,7 @@ package snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Snake {
@@ -86,7 +87,18 @@ public class Snake {
 	  tail.next=null;
 	  
   }
-	
+public void eat(Egg e){
+	//计算此 Rectangle 与指定 Rectangle 的交集;
+	if(this .getRect().intersects(e.getRect())){
+		e.reAppear();
+	    addToHead();
+	}
+		
+}
+//获取头节点的位置；
+public Rectangle getRect(){
+	return new Rectangle(head.col*Yard.BLOCK_SIZE, head.row*Yard.BLOCK_SIZE, head.w, head.h);
+}
 	private class Node{
 	   private	int w=Yard.BLOCK_SIZE;
 	   private 	int h=Yard.BLOCK_SIZE;
