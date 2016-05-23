@@ -10,11 +10,13 @@ public class Snake {
      Node head=null;
      Node tail=null;
      int size=0;
+     Yard y=null;
      Node n=new Node(10,10,Dir.D);
-     public Snake(){
+     public Snake(Yard y){
     	 head=n;
     	 tail=n;
     	 size=1;
+    	 this.y=y;
      }
 	public void addToTail(){
 		Node node=null;
@@ -62,6 +64,7 @@ public class Snake {
 		if(size<=0)
 			return;
 		Node n=head;
+		//move();
 		//遍历这条蛇的每一个节点，并依此画出；
 	while(n!=null){
 			n.draw(g);//内部类的draw()方法；
@@ -71,12 +74,24 @@ public class Snake {
 	/*	for(Node n = head; n != null; n = n.next) {
 			n.draw(g);
 		}*/
-	move();//(在一个方法中调用同一个类的方法)使蛇开始移动；
+	move();
+	//(在一个方法中调用同一个类的方法)使蛇开始移动；
 	}
  public  void move(){
 	    addToHead();
 		deleteFromTail();
+		cherkDead();
 	}
+ public void cherkDead(){
+	 //撞到墙停止移动；
+	 if(head.row<3||head.row>Yard.ROWS||head.col<0||head.col>Yard.COLS)
+		 y.stop();
+	 //头部吃到自己停止移动
+	for(Node n = head.next; n != null; n = n.next) {
+			if(n.row==head.row&&n.col==head.col)
+				y.stop();
+	}
+ }
   public void deleteFromTail(){
 	  if(size<=0)return;
 /*
@@ -125,16 +140,20 @@ public Rectangle getRect(){
 		  int  key=e.getKeyCode();//返回与此事件中的键关联的整数 keyCode;
 			switch(key){
 			case KeyEvent.VK_LEFT:
-				head.dir=Dir.L;
+				if(head.dir!=Dir.R)
+					 head.dir=Dir.L;
 				break;
 			case KeyEvent.VK_UP:
-				head.dir=Dir.U;
+				if(head.dir!=Dir.D)
+					head.dir=Dir.U;
 				break;
 			case KeyEvent.VK_RIGHT:
-				head.dir=Dir.R;
+				if(head.dir!=Dir.L)
+				    head.dir=Dir.R;
 				break;
 			case KeyEvent.VK_DOWN:
-				head.dir=Dir.D;
+				if(head.dir!=Dir.U)
+				   head.dir=Dir.D;
 				break;
 			}
 			

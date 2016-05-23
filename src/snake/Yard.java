@@ -12,10 +12,11 @@ import java.awt.event.WindowEvent;
 public class Yard  extends Frame{
 	
    public static final int ROWS = 50;
-	public static final int COLS =50;
-	public static final int BLOCK_SIZE = 10;
+   public static final int COLS =50;
+   public static final int BLOCK_SIZE = 10;
+   public boolean flag=true;
 	
-	Snake s=new Snake();
+	Snake s=new Snake(this);
 	Egg e=new Egg();
 	
 	//Image offScreenImage=null;
@@ -41,10 +42,13 @@ public class Yard  extends Frame{
 		e.draw( g);
 		s.eat( e);
 	}
+	public void stop(){
+		flag=false;
+	}
 	private class PaintThread  implements Runnable{
 		
 		public void run(){
-			while(true){
+			while(flag){
 				repaint();//重绘此组件；
 				try{
 					Thread.sleep(300);
