@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Snake {
-	
+	 
      Node head=null;
      Node tail=null;
      int size=0;
@@ -76,6 +76,8 @@ public class Snake {
 		}*/
 	move();
 	//(在一个方法中调用同一个类的方法)使蛇开始移动；
+
+
 	}
  public  void move(){
 	    addToHead();
@@ -107,6 +109,7 @@ public void eat(Egg e){
 	if(this .getRect().intersects(e.getRect())){
 		e.reAppear();
 	    addToHead();
+	    y.setScore(y.getScore()+5);
 	}
 		
 }
