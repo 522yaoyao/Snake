@@ -16,9 +16,10 @@ public class Yard  extends Frame{
    public static final int ROWS = 50;
    public static final int COLS =50;
    public static final int BLOCK_SIZE = 10;
-   public boolean flag=true;
+   public boolean gameOver=false;
    public int score=0;
-	
+   
+   PaintThread paintThread=new PaintThread();
 	Snake s=new Snake(this);
 	Egg e=new Egg();
 	
@@ -48,9 +49,10 @@ public class Yard  extends Frame{
 		e.draw( g);
 		s.eat( e);
 		g.setColor(Color.YELLOW);
-		if(flag==false){
+		if(gameOver){
 			g.setFont(new Font("中华彩云",Font.BOLD,50));
 			g.drawString("游戏结束", 150, 250);
+			paintThread.gameOver();//此时结束线程；
 		}
 	}
 	@Override
@@ -64,12 +66,13 @@ public class Yard  extends Frame{
 		g.drawImage(offScreenImage, 0, 0, null);//绘制当前可用的指定图像的指定区域，动态地缩放图像使其符合目标绘制表面的指定区域；
 	}
 	public void stop(){
-		flag=false;
+	//	flag=false;
+		gameOver=true;
 	}
 	private class PaintThread  implements Runnable{
-		
+		private boolean running=true;
 		public void run(){
-			while(flag){
+			while(running){
 //				System.out.println(i++);
 				repaint();//重绘此组件；
 				try{
@@ -79,6 +82,9 @@ public class Yard  extends Frame{
 					
 				}
 			}
+		}
+		public void gameOver(){
+			running=false;
 		}
 	}
 	private class KeyMonitor extends KeyAdapter{
@@ -106,7 +112,7 @@ public class Yard  extends Frame{
 			}
 		});
 		this.addKeyListener(new KeyMonitor());//添加键盘监听；
-		new Thread(new PaintThread()).start();
+		new Thread(paintThread).start();
 	}
 	
 	
