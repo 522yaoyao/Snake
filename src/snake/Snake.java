@@ -71,9 +71,7 @@ public class Snake {
 			n=n.next;
 			
 		}
-	/*	for(Node n = head; n != null; n = n.next) {
-			n.draw(g);
-		}*/
+/*调用move()方法，使每次重画蛇都会移动一步*/	
 	move();
 	//(在一个方法中调用同一个类的方法)使蛇开始移动；
 
@@ -96,10 +94,7 @@ public class Snake {
  }
   public void deleteFromTail(){
 	  if(size<=0)return;
-/*
-	  tail=null;//使tail的前一个节点指向null;
-	  tail.prev=null;//使其不指向前驱节点；
-	  */
+
 	  tail=tail.prev;
 	  tail.next=null;
 	  
